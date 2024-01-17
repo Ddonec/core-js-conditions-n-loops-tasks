@@ -118,8 +118,32 @@ function isIsoscelesTriangle(a, b, c) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  let result = '';
+
+  const first = Math.floor(num / 10);
+  const second = num % 10;
+
+  for (let i = 0; i < first; i += 1) {
+    result += 'X';
+  }
+
+  if (second === 9) {
+    result += 'IX';
+  } else if (second >= 5) {
+    result += 'V';
+    for (let i = 0; i < second - 5; i += 1) {
+      result += 'I';
+    }
+  } else if (second === 4) {
+    result += 'IV';
+  } else {
+    for (let i = 0; i < second; i += 1) {
+      result += 'I';
+    }
+  }
+
+  return result;
 }
 
 /**
@@ -137,8 +161,57 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  let result = '';
+  for (let i = 0; i < numberStr.length; i += 1) {
+    if (i > 0 && i < numberStr.length) {
+      result += ' ';
+    }
+    switch (numberStr[i]) {
+      case '9':
+        result += 'nine';
+        break;
+      case '8':
+        result += 'eight';
+        break;
+      case '7':
+        result += 'seven';
+        break;
+      case '6':
+        result += 'six';
+        break;
+      case '5':
+        result += 'five';
+        break;
+      case '4':
+        result += 'four';
+        break;
+      case '3':
+        result += 'three';
+        break;
+      case '2':
+        result += 'two';
+        break;
+      case '1':
+        result += 'one';
+        break;
+      case '0':
+        result += 'zero';
+        break;
+      case '.':
+        result += 'point';
+        break;
+      case ',':
+        result += 'point';
+        break;
+      case '-':
+        result += 'minus';
+        break;
+      default:
+        break;
+    }
+  }
+  return result;
 }
 
 /**
@@ -153,8 +226,14 @@ function convertNumberToString(/* numberStr */) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  let res = false;
+  let strRev = '';
+  for (let i = str.length - 1; i >= 0; i -= 1) {
+    strRev += str[i];
+  }
+  if (str === strRev) res = true;
+  return res;
 }
 
 /**
@@ -171,8 +250,13 @@ function isPalindrome(/* str */) {
  *  'qwerty', 'Q'     => -1
  *  'qwerty', 'p'     => -1
  */
-function getIndexOf(/* str, letter */) {
-  throw new Error('Not implemented');
+function getIndexOf(str, letter) {
+  for (let i = 0; i < str.length - 1; i += 1) {
+    if (str[i] === letter) {
+      return i;
+    }
+  }
+  return -1;
 }
 
 /**
@@ -190,10 +274,18 @@ function getIndexOf(/* str, letter */) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
-}
+function isContainNumber(num, digit) {
+  let value = num;
+  while (value > 0) {
+    const checkNum = value % 10;
+    if (checkNum === digit) {
+      return true;
+    }
+    value = Math.floor(value / 10);
+  }
 
+  return false;
+}
 /**
  * Finds the index of an element in an array where the sum of elements to the left equals the sum of elements to the right.
  * If such an index does not return -1.
@@ -207,8 +299,25 @@ function isContainNumber(/* num, digit */) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  for (let i = 0; i < arr.length; i += 1) {
+    let left = 0;
+    let right = 0;
+
+    for (let I = 0; I < i; I += 1) {
+      left += arr[I];
+    }
+
+    for (let ii = i + 1; ii < arr.length; ii += 1) {
+      right += arr[ii];
+    }
+
+    if (left === right) {
+      return i;
+    }
+  }
+
+  return -1;
 }
 
 /**
