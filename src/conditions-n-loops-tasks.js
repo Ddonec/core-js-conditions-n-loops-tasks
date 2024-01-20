@@ -341,8 +341,45 @@ function getBalanceIndex(arr) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const matrix = new Array(size);
+  for (let i = 0; i < size; i += 1) {
+    matrix[i] = new Array(size);
+  }
+
+  let counter = 1;
+  let x = 0;
+  let xRevert = size - 1;
+  let y = 0;
+  let yRevert = size - 1;
+
+  while (x <= xRevert && y <= yRevert) {
+    for (let i = y; i <= yRevert; i += 1) {
+      matrix[x][i] = counter;
+      counter += 1;
+    }
+    x += 1;
+
+    for (let i = x; i <= xRevert; i += 1) {
+      matrix[i][yRevert] = counter;
+      counter += 1;
+    }
+    yRevert -= 1;
+
+    for (let i = yRevert; i >= y; i -= 1) {
+      matrix[xRevert][i] = counter;
+      counter += 1;
+    }
+    xRevert -= 1;
+
+    for (let i = xRevert; i >= x; i -= 1) {
+      matrix[i][y] = counter;
+      counter += 1;
+    }
+    y += 1;
+  }
+
+  return matrix;
 }
 
 /**
@@ -360,8 +397,23 @@ function getSpiralMatrix(/* size */) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+
+function rotateMatrix(matrix) {
+  const lenght = matrix.length;
+  const newMatrix = matrix;
+  for (let i = 0; i < lenght / 2; i += 1) {
+    for (let I = i; I < lenght - i - 1; I += 1) {
+      let dataMatrix = [];
+      dataMatrix = newMatrix[i][I];
+
+      newMatrix[i][I] = newMatrix[lenght - I - 1][i];
+      newMatrix[lenght - I - 1][i] = newMatrix[lenght - i - 1][lenght - I - 1];
+      newMatrix[lenght - i - 1][lenght - I - 1] = newMatrix[I][lenght - i - 1];
+
+      newMatrix[I][lenght - i - 1] = dataMatrix;
+    }
+  }
+  return newMatrix;
 }
 
 /**
@@ -378,10 +430,19 @@ function rotateMatrix(/* matrix */) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+function sortByAsc(arr) {
+  const array = arr;
+  for (let i = 1; i < arr.length; i += 1) {
+    let I = i;
+    const position = array[i];
+    while (I > 0 && position < array[I - 1]) {
+      array[I] = array[I - 1];
+      I -= 1;
+    }
+    array[I] = position;
+  }
+  return array;
 }
-
 /**
  * Shuffles characters in a string so that the characters with an odd index are moved to the end of the string at each iteration.
  * Take into account that the string can be very long and the number of iterations is large. Consider how you can optimize your solution.
@@ -399,8 +460,30 @@ function sortByAsc(/* arr */) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  let string = str;
+  const arr = [string];
+
+  for (let iteration = 1; iteration <= iterations; iteration += 1) {
+    let even = '';
+    let odd = '';
+
+    for (let i = 0; i < string.length; i += 2) {
+      even += string[i];
+      if (i + 1 < string.length) {
+        odd += string[i + 1];
+      }
+    }
+
+    string = even + odd;
+    arr[iteration] = string;
+
+    if (string === str) {
+      return arr[iterations % iteration];
+    }
+  }
+
+  return string;
 }
 
 /**
@@ -420,7 +503,7 @@ function shuffleChar(/* str, iterations */) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
+function getNearestBigger(/*  number  */) {
   throw new Error('Not implemented');
 }
 
