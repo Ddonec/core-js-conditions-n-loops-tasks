@@ -71,8 +71,15 @@ function getMaxNumber(a, b, c) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  if (queen.x === king.x || queen.y === king.y) {
+    return true;
+  }
+
+  if (Math.abs(queen.x - king.x) === Math.abs(queen.y - king.y)) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -503,8 +510,30 @@ function shuffleChar(str, iterations) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/*  number  */) {
-  throw new Error('Not implemented');
+
+function getNearestBigger(number) {
+  let n = number;
+  const arrN = [];
+  while (n > 0) {
+    const part = n % 10;
+    arrN.unshift(part);
+    n = Math.floor(n / 10);
+  }
+
+  let i = arrN.length - 1;
+  while (i > 0 && arrN[i] <= arrN[i - 1]) {
+    i -= 1;
+  }
+  if (i === 0) {
+    return number;
+  }
+  let j = arrN.length - 1;
+  while (arrN[j] <= arrN[i - 1]) {
+    j -= 1;
+  }
+  [arrN[i - 1], arrN[j]] = [arrN[j], arrN[i - 1]];
+  const sort = arrN.splice(i, arrN.length - i).sort((a, b) => a - b);
+  return parseInt([...arrN, ...sort].join(''), 10);
 }
 
 module.exports = {
